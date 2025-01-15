@@ -40,6 +40,8 @@ function verificarChute() {
         tentativa++;
         limparCampo();
     }
+
+    verificarRegra(chute);
 }
 
 function gerarNumeroAleatorio() {
@@ -54,7 +56,7 @@ function gerarNumeroAleatorio() {
         return gerarNumeroAleatorio();
     } else {
         listaDenumerosSorteados.push(numeroEscolhido);
-        console.log(listaDenumerosSorteados);
+        //console.log(listaDenumerosSorteados);
         return numeroEscolhido;
     }
 }
@@ -70,4 +72,11 @@ function reiniciarJogo() {
     tentativa = 1;
     exibirMensagemInicial();
     document.getElementById('reiniciar').setAttribute('disabled', true);
+}
+
+function verificarRegra(chuteUser) {
+    if (chuteUser < 1 || chuteUser > 10) {
+        exibirTextoNaTela('p', 'O chute não está entre 1 e 10. Jogue novamente!');
+        limparCampo();
+    }
 }
