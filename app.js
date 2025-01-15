@@ -32,16 +32,19 @@ function verificarChute() {
         exibirTextoNaTela('p', mensagemTentativas);
         document.getElementById('reiniciar').removeAttribute('disabled');
     } else {
-        if (chute > numeroSecreto) {
-            exibirTextoNaTela('p', 'O número secreto é menor!');
+        if (chute < 1 || chute > 10) {
+            exibirTextoNaTela('p', 'O chute não está entre 1 e 10. Jogue novamente!');
+            limparCampo();
         } else {
-            exibirTextoNaTela('p', 'O número secreto é maior!');
+            if (chute > numeroSecreto) {
+                exibirTextoNaTela('p', 'O número secreto é menor!');
+            } else {
+                exibirTextoNaTela('p', 'O número secreto é maior!');
+            }
+            tentativa++;
+            limparCampo();
         }
-        tentativa++;
-        limparCampo();
     }
-
-    verificarRegra(chute);
 }
 
 function gerarNumeroAleatorio() {
