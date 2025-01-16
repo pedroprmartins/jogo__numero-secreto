@@ -1,3 +1,4 @@
+let listaDeNumerosChutado = [];
 let listaDenumerosSorteados = [];
 let numeroLimite = 10;
 let numeroSecreto = gerarNumeroAleatorio();
@@ -24,6 +25,8 @@ function exibirMensagemInicial() {
 
 function verificarChute() {
     let chute = parseInt(document.querySelector('input').value);
+    let numeroEscolhidoUser = chute;
+    console.log(listaDeNumerosChutado);
 
     if (chute === numeroSecreto) {
         let palavraTentativa = tentativa > 1 ? 'tentativas' : 'tentativa';
@@ -31,18 +34,25 @@ function verificarChute() {
         exibirTextoNaTela('h1', 'Acertou!');
         exibirTextoNaTela('p', mensagemTentativas);
         document.getElementById('reiniciar').removeAttribute('disabled');
+        listaDeNumerosChutado = [];
     } else {
         if (chute < 1 || chute > 10) {
             exibirTextoNaTela('p', 'O chute não está entre 1 e 10. Jogue novamente!');
             limparCampo();
         } else {
-            if (chute > numeroSecreto) {
-                exibirTextoNaTela('p', 'O número secreto é menor!');
+            if (listaDeNumerosChutado.includes(numeroEscolhidoUser)) {
+                exibirTextoNaTela('p', 'Você já chutou esse número.');
+                limparCampo();
             } else {
-                exibirTextoNaTela('p', 'O número secreto é maior!');
+                listaDeNumerosChutado.push(numeroEscolhidoUser);
+                if (chute > numeroSecreto) {
+                    exibirTextoNaTela('p', 'O número secreto é menor!');
+                } else {
+                    exibirTextoNaTela('p', 'O número secreto é maior!');
+                }
+                tentativa++;
+                limparCampo();
             }
-            tentativa++;
-            limparCampo();
         }
     }
 }
