@@ -26,32 +26,35 @@ function exibirMensagemInicial() {
 function verificarChute() {
     let chute = parseInt(document.querySelector('input').value);
     let numeroEscolhidoUser = chute;
-    console.log(listaDeNumerosChutado);
 
-    if (chute === numeroSecreto) {
-        let palavraTentativa = tentativa > 1 ? 'tentativas' : 'tentativa';
-        let mensagemTentativas = `Esse mama na égua descobriu o número secreto com ${tentativa} ${palavraTentativa}`;
-        exibirTextoNaTela('h1', 'Acertou!');
-        exibirTextoNaTela('p', mensagemTentativas);
-        document.getElementById('reiniciar').removeAttribute('disabled');
-        listaDeNumerosChutado = [];
+    if (Number.isNaN(chute)) {
+        exibirTextoNaTela('p', 'O campo está vazio. Digite um número válido.');
     } else {
-        if (chute < 1 || chute > 10) {
-            exibirTextoNaTela('p', 'O chute não está entre 1 e 10. Jogue novamente!');
-            limparCampo();
+        if (chute === numeroSecreto) {
+            let palavraTentativa = tentativa > 1 ? 'tentativas' : 'tentativa';
+            let mensagemTentativas = `Você descobriu o numero secreto com ${tentativa} ${palavraTentativa}`;
+            exibirTextoNaTela('h1', 'Acertou!');
+            exibirTextoNaTela('p', mensagemTentativas);
+            document.getElementById('reiniciar').removeAttribute('disabled');
+            listaDeNumerosChutado = [];
         } else {
-            if (listaDeNumerosChutado.includes(numeroEscolhidoUser)) {
-                exibirTextoNaTela('p', 'Você já chutou esse número.');
+            if (chute < 1 || chute > 10) {
+                exibirTextoNaTela('p', 'O chute não está entre 1 e 10. Jogue novamente!');
                 limparCampo();
             } else {
-                listaDeNumerosChutado.push(numeroEscolhidoUser);
-                if (chute > numeroSecreto) {
-                    exibirTextoNaTela('p', 'O número secreto é menor!');
+                if (listaDeNumerosChutado.includes(numeroEscolhidoUser)) {
+                    exibirTextoNaTela('p', 'Você já chutou esse número.');
+                    limparCampo();
                 } else {
-                    exibirTextoNaTela('p', 'O número secreto é maior!');
+                    listaDeNumerosChutado.push(numeroEscolhidoUser);
+                    if (chute > numeroSecreto) {
+                        exibirTextoNaTela('p', 'O número secreto é menor!');
+                    } else {
+                        exibirTextoNaTela('p', 'O número secreto é maior!');
+                    }
+                    tentativa++;
+                    limparCampo();
                 }
-                tentativa++;
-                limparCampo();
             }
         }
     }
